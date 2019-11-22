@@ -1,5 +1,6 @@
 //#[derive(Debug)]
 use super::document::Document;
+use std::io::{self, Write};
 pub trait Storage {
     fn read4mongo(&mut self, file_name: &str) -> Document;
 }

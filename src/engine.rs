@@ -1,10 +1,28 @@
 use super::index::Index;
+use std::collections::BTreeMap;
 use super::document::Document;
 use super::search::Search;
 use super::constants::*;
+use parking_lot::RwLock;
+use std::error::Error;
+use heed::Result as ZResult;
+use std::sync::Arc;
+use std::borrow::BorrowMut;
+use heed::types::{OwnedType, ByteSlice};
+
+pub trait HoykaTrait {
+    fn add_document(&self, doc: Document) -> ZResult<()>;
+    fn delete_document(&self, doc_id: String) -> ZResult<()>;
+    fn search_document(&self, keyword: String) -> ZResult<()>;
+}
 
 #[derive(Debug)]
-pub struct HyokaEngine {
+pub struct HyokaEngine<'a> {
+    db: heed::Database<String, ByteSlice>,
+    write: &'a mut heed::RwTxn<'a>,
+}
+
+impl HoykaTrait for HyokaEngine<'_> {
     // TODO: 引擎
     // 处理内容
     // 1. 创建倒排索引文件（以名词为倒排【初期主要是人名实体】）
@@ -15,4 +33,20 @@ pub struct HyokaEngine {
     // 6. score 的分值以 title累积 4分，description 累积 2 分，内容累积 1 分。然后 title 出现的次数累积 2 倍，
     // 描述累积 1 倍，内容累积 0.5 倍
     // 7. 最后的结果通过 timestamp 时间戳来倒序
+    fn add_document(&self, doc: Document) -> ZResult<()> {
+        
+        Ok(())
+    }
+
+    fn delete_document(&self, doc_id: String) -> ZResult<()> {
+        unimplemented!()
+    }
+
+    fn search_document(&self, keyword: String) -> ZResult<()> {
+        unimplemented!()
+    }
+}
+
+impl HyokaEngine<'_> {
+    fn cut_keywords(&self, doc: &Document) -> Vec<String> {}
 }

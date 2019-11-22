@@ -1,4 +1,5 @@
-#[derive(Debug)]
+use serde::{Serialize, Deserialize};
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub struct Document<'a> {
     pub doc_id: usize, // 文档 id
     pub title: &'a str,
